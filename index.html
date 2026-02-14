@@ -16,7 +16,7 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a18cd1);
   background-size: 400% 400%;
   animation: bgMove 12s ease infinite;
 }
@@ -27,7 +27,7 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* Glass card */
+/* card */
 .card {
   width: min(92%, 420px);
   padding: 30px;
@@ -36,26 +36,12 @@ body {
   backdrop-filter: blur(15px);
   background: rgba(255,255,255,0.25);
   box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-  animation: fadeUp 1s ease;
 }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+h1 { margin: 0; font-size: 1.9rem; }
+p { margin-top: 10px; font-size: 1.05rem; }
 
-h1 {
-  margin: 0;
-  font-size: 1.9rem;
-}
-
-p {
-  margin-top: 10px;
-  font-size: 1.05rem;
-  line-height: 1.5;
-}
-
-/* Buttons */
+/* buttons */
 .buttons {
   margin-top: 25px;
   position: relative;
@@ -84,9 +70,7 @@ button {
   box-shadow: 0 8px 18px rgba(255, 150, 113, 0.4);
 }
 
-button:hover {
-  transform: translateY(-2px);
-}
+button:hover { transform: translateY(-2px); }
 
 .no {
   position: absolute;
@@ -95,7 +79,16 @@ button:hover {
   background: #eee;
 }
 
-/* floating hearts */
+/* result message */
+.success {
+  font-size: 1.2rem;
+  margin-top: 15px;
+  color: #b30059;
+  font-weight: bold;
+  line-height: 1.6;
+}
+
+/* hearts */
 .heart {
   position: absolute;
   bottom: -20px;
@@ -108,14 +101,6 @@ button:hover {
     transform: translateY(-110vh);
     opacity: 0;
   }
-}
-
-/* success */
-.success {
-  font-size: 1.3rem;
-  margin-top: 15px;
-  color: #b30059;
-  font-weight: bold;
 }
 </style>
 </head>
@@ -140,7 +125,7 @@ button:hover {
 
 <!-- AUDIO -->
 <audio id="music" preload="auto" loop>
-  <source src="music.mp3" type="audio/mpeg">
+  <source src="valentines_day.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -150,7 +135,7 @@ const result = document.getElementById("result");
 
 let started = false;
 
-/* unlock music safely */
+/* unlock music */
 function startMusic() {
   if (started) return;
   music.play().then(() => {
@@ -175,13 +160,21 @@ noBtn.addEventListener("touchstart", (e) => {
   moveNo();
 });
 
-/* YES */
+/* YES / OF COURSE */
 function accept() {
   startMusic();
-  window.location.href = "page2.html";
+  result.innerHTML = `
+    <div class="success">
+      You just made my whole world brighter 🌸<br><br>
+      I’ll be on standby, smiling at my phone.<br>
+      Once that new dress says, “let’s go,”<br>
+      just send me the location and I’ll be there. 💖
+    </div>
+  `;
+  hearts();
 }
 
-/* floating hearts generator */
+/* hearts */
 function hearts() {
   for (let i = 0; i < 20; i++) {
     const h = document.createElement("div");
@@ -190,7 +183,6 @@ function hearts() {
     h.style.left = Math.random() * 100 + "vw";
     h.style.animationDuration = (Math.random() * 3 + 2) + "s";
     document.body.appendChild(h);
-
     setTimeout(() => h.remove(), 5000);
   }
 }
@@ -198,4 +190,3 @@ function hearts() {
 
 </body>
 </html>
-
