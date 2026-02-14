@@ -61,16 +61,12 @@ button {
 .yes {
   background: linear-gradient(45deg, #ff4d6d, #ff758f);
   color: white;
-  box-shadow: 0 8px 18px rgba(255, 77, 109, 0.4);
 }
 
 .ofcourse {
   background: linear-gradient(45deg, #ff9671, #ffc75f);
   color: white;
-  box-shadow: 0 8px 18px rgba(255, 150, 113, 0.4);
 }
-
-button:hover { transform: translateY(-2px); }
 
 .no {
   position: absolute;
@@ -79,13 +75,17 @@ button:hover { transform: translateY(-2px); }
   background: #eee;
 }
 
-/* result message */
 .success {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin-top: 15px;
   color: #b30059;
-  font-weight: bold;
   line-height: 1.6;
+}
+
+.textBtn{
+  margin-top:15px;
+  background:linear-gradient(45deg,#ff4d6d,#ff758f);
+  color:white;
 }
 
 /* hearts */
@@ -135,19 +135,14 @@ const result = document.getElementById("result");
 
 let started = false;
 
-/* unlock music */
 function startMusic() {
   if (started) return;
-  music.play().then(() => {
-    started = true;
-    console.log("Music started 🎵");
-  }).catch(e => console.log(e));
+  music.play().then(() => started = true).catch(e => console.log(e));
 }
 
 document.body.addEventListener("click", startMusic, { once: true });
 document.body.addEventListener("touchstart", startMusic, { once: true });
 
-/* move NO */
 function moveNo() {
   const x = Math.random() * 250 - 125;
   const y = Math.random() * 100 - 50;
@@ -160,21 +155,28 @@ noBtn.addEventListener("touchstart", (e) => {
   moveNo();
 });
 
-/* YES / OF COURSE */
 function accept() {
   startMusic();
+
   result.innerHTML = `
     <div class="success">
       You just made my whole world brighter 🌸<br><br>
       I’ll be on standby, smiling at my phone.<br>
       Once that new dress says, “let’s go,”<br>
       just send me the location and I’ll be there. 💖
+      <br><br>
+      <button class="textBtn" onclick="sendMsg()">💌 Text me</button>
     </div>
   `;
+
   hearts();
 }
 
-/* hearts */
+function sendMsg(){
+  const msg = encodeURIComponent("I am ready 😌");
+  window.location.href = "https://wa.me/YOURNUMBER?text=" + msg;
+}
+
 function hearts() {
   for (let i = 0; i < 20; i++) {
     const h = document.createElement("div");
